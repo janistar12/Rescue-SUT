@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>โปรไฟล์ผู้ใช้</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .profile-section {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #eee;
+      margin-bottom: 20px;
+      font-size: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .profile-info {
+      background: #f8f8f8;
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
+      max-width: 340px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      text-align: left;
+    }
+
+    .profile-info h3 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #d32f2f;
+    }
+
+    .profile-info p {
+      margin: 8px 0;
+      font-size: 15px;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    /* ปุ่มย้อนกลับ */
+    .back-button {
+      font-size: 20px;
+      color: #d32f2f;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 10px;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+
+    .back-button:hover {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <div class="back-button" onclick="goBack()">← </div>
+      <h1>โปรไฟล์</h1>
+    </header>
+
+    <div class="profile-section">
+      <div class="avatar">👤</div>
+      <div class="profile-info">
+        <p><strong>ชื่อ-สกุล:</strong> นางสาวจณิสตา นพรัตน์</p>
+        <p><strong>รหัสนักศึกษา:</strong> B6801977</p>
+        <p><strong>เบอร์โทรศัพท์:</strong> 062-472-0340</p>
+        <p><strong>Email:</strong>******@sut.ac.th</p>
+        <p><strong>เบอร์ติดต่อฉุกเฉิน:</strong> 088-888-8888</p>
+        <p><strong>โรคประจำตัว:</strong> -</p>
+        <p><strong>ยาที่แพ้:</strong> -</p>
+        <p><strong>กรุ๊ปเลือด:</strong> AB</p>
+        <p><strong>ส่วนสูง:</strong> 165 ซม.</p>
+        <p><strong>น้ำหนัก:</strong> ** กก.</p>
+        <p><strong>เพศ:</strong> หญิง</p>
+        <p><strong>ประวัติการรักษา:</strong> 
+          - 2566: ตรวจสุขภาพประจำปี<br />
+          - 2565: เย็บแผล(ศัลกรรมบาดเเผล)
+        </p>
+        <p><strong>ใบนัดอิเล็กทรอนิกส์:</strong> 
+          <a href="#">ดูใบนัดล่าสุด</a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      function goBack() {
+        if (document.referrer) {
+          window.history.back();
+        } else {
+          window.location.href = 'index.html';
+        }
+      }
+    </script>
+  </div>
+</body>
+</html>

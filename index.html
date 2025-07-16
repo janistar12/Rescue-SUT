@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickRescue SUT</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #d65023;
+      color: white;
+      padding: 1rem;
+    }
+
+    .nav-icon {
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 60px;
+      left: 10px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 200px;
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+    }
+
+    .dropdown-menu a {
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: #333;
+      border-bottom: 1px solid #eee;
+      font-size: 1rem;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #f2f2f2;
+    }
+
+    .search-box {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 10px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      padding: 0.5rem;
+      z-index: 1000;
+    }
+
+    .search-box input {
+      padding: 0.5rem;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .sos-section {
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    .sos-button {
+      background-color: #2b58cb;
+      color: white;
+      font-size: 1.2rem;
+      padding: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .incident-types {
+      display: flex;
+      justify-content: space-around;
+      margin: 1rem 0;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .map-container {
+      width: 100%;
+      height: 250px;
+      padding: 0 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 10px;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: #ffffff;
+      border-top: 1px solid #ccc;
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .bottom-nav .icon {
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <div class="nav-icon" onclick="toggleMenu()">☰</div>
+      <h1>QuickRescue SUT</h1>
+      <div class="nav-icon" onclick="toggleSearch()">🔍</div>
+
+      <!-- เมนูดรอปดาวน์ -->
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="#">วิธีการใช้งาน</a>
+        <a href="#">สิทธิบัตรทอง</a>
+        <a href="#">สิทธิรักษามอ</a>
+        <a href="#">การตั้งค่า</a>
+        <a href="#">แชทกับหมอ</a>
+        <a href="#">เกี่ยวกับ</a>
+      </div>
+
+      <!-- กล่องค้นหา -->
+      <div class="search-box" id="searchBox">
+        <input type="text" id="searchInput" placeholder="ค้นหา..." onkeydown="if(event.key==='Enter'){searchFunction(this.value)}">
+      </div>
+    </header>
+
+    <div class="sos-section">
+      <button class="sos-button" onclick="triggerSOS()">S O S</button>
+      <p>แจ้งเหตุฉุกเฉิน เรียกรถพยาบาลใกล้เคียง</p>
+    </div>
+
+    <div class="incident-types">
+      <div class="incident-card">🚘<br />Car Accident</div>
+      <div class="incident-card">🏥<br />Medical</div>
+      <div class="incident-card">🧯<br />Fire</div>
+      <div class="incident-card">⚠️<br />Other</div>
+    </div>
+
+    <div class="map-container">
+      <iframe id="userMap" src="" loading="lazy" allowfullscreen></iframe>
+    </div>
+
+    <div class="bottom-nav">
+  <div onclick="window.location.href='index.html'"><div class="icon">🏡</div>หน้าแรก</div>
+  <div onclick="alert('ยังไม่ได้เชื่อมโยงตำแหน่ง');"><div class="icon">📍</div>ตำแหน่ง</div>
+  <div onclick="window.location.href='ai.html'"><div class="icon">✧</div>AI</div>
+  <div onclick="window.location.href='profile.html'"><div class="icon">👤</div>โปรไฟล์</div>
+</div>
+
+
+  <!-- Script: SOS -->
+  <script>
+    function triggerSOS() {
+      alert("แจ้งเตือน: ระบบกำลังติดต่อรถพยาบาล SUT");
+      const audio = new Audio("button-3");
+      audio.play();
+    }
+  </script>
+
+  <!-- Script: Geolocation -->
+  <script>
+    window.onload = function () {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const mapFrame = document.getElementById("userMap");
+            mapFrame.src = `https://www.google.com/maps?q=${lat},${lon}&z=15&output=embed`;
+          },
+          function (error) {
+            alert("ไม่สามารถเข้าถึงตำแหน่งได้: " + error.message);
+          }
+        );
+      } else {
+        alert("เบราว์เซอร์ของคุณไม่รองรับการระบุตำแหน่ง");
+      }
+    };
+  </script>
+
+  <!-- Script: Toggle Menu & Search -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("dropdownMenu");
+      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+    }
+
+    function toggleSearch() {
+      const searchBox = document.getElementById("searchBox");
+      searchBox.style.display = searchBox.style.display === "block" ? "none" : "block";
+      document.getElementById("searchInput").focus();
+    }
+
+    function searchFunction(query) {
+      if (query.trim() !== "") {
+        alert("กำลังค้นหา: " + query);
+        // หรือเปลี่ยนเป็น window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+      }
+    }
+
+    // ปิดเมนู/กล่องค้นหาเมื่อคลิกที่อื่น
+    document.addEventListener("click", function (event) {
+      const menu = document.getElementById("dropdownMenu");
+      const menuBtn = document.querySelectorAll(".nav-icon")[0];
+      const searchBtn = document.querySelectorAll(".nav-icon")[1];
+      const searchBox = document.getElementById("searchBox");
+
+      if (!menu.contains(event.target) && !menuBtn.contains(event.target)) {
+        menu.style.display = "none";
+      }
+
+      if (!searchBox.contains(event.target) && !searchBtn.contains(event.target)) {
+        searchBox.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>

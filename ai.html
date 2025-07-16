@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ผู้ช่วย AI</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .chat-section {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-box {
+      background-color: #f1f1f1;
+      padding: 10px 15px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      max-width: 75%;
+    }
+
+    .chat-box.user {
+      background-color: #dcedc8;
+      align-self: flex-end;
+    }
+
+    .chat-box.bot {
+      background-color: #e1f5fe;
+      align-self: flex-start;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+      background-color: #fff;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      margin-right: 10px;
+    }
+
+    .chat-input button {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+   <header>
+  <div class="back-button" onclick="goBack()">← </div>
+  <h1>แชทกับ หมอ</h1>
+</header>
+
+    <div class="chat-section" id="chatLog">
+      <div class="chat-box bot">หมอ: สวัสดีค่ะ มีอะไรให้ช่วยไหมคะ?</div>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="พิมพ์ข้อความ..." />
+      <button onclick="sendMessage()">ส่ง</button>
+    </div>
+
+<script>
+  function goBack() {
+    if (document.referrer) {
+      window.history.back();
+    } else {
+      window.location.href = 'index.html';
+    }
+  }
+</script>
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      if (!message) return;
+
+      const chatLog = document.getElementById("chatLog");
+
+      const userMsg = document.createElement("div");
+      userMsg.className = "chat-box user";
+      userMsg.textContent = "คนไข้: " + message;
+      chatLog.appendChild(userMsg);
+
+      const botMsg = document.createElement("div");
+      botMsg.className = "chat-box bot";
+      botMsg.textContent = "หมอ: ขออภัย ระบบยังอยู่ระหว่างพัฒนา";
+      chatLog.appendChild(botMsg);
+
+      input.value = "";
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+  </script>
+</body>
+</html>
